@@ -1,0 +1,27 @@
+{
+  "name": "blue-thunder-build",
+  "description": "Used to compile static assets",
+  "scripts": {
+    "watch": "onchange 'src/scss/**/*.scss' -i -- npm run css",
+    "css": "npm-run-all css:*",
+    "css:lint": "stylelint src/scss/*.scss; exit 0",
+    "css:sass": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 src/scss/main.scss dist/css/main.css",
+    "css:prefix": "postcss --use autoprefixer --replace dist/css/*.css",
+    "css:minify": "cleancss --level 1 --source-map --source-map-inline-sources --output dist/css/main.min.css dist/css/main.css",
+    "js": "webpack",
+    "build": "npm-run-all css js && cp -v src/index.html dist/index.html"
+  },
+  "devDependencies": {
+    "autoprefixer": "9.0.1",
+    "clean-css-cli": "4.1.11",
+    "npm-run-all": "4.1.3",
+    "lodash": "4.17.11",
+    "node-sass": "4.9.2",
+    "onchange": "4.1.0",
+    "postcss-cli": "6.0.0",
+    "stylelint": "9.4.0",
+    "stylelint-config-standard": "18.2.0",
+    "webpack": "4.26.1",
+    "webpack-cli": "3.1.2"
+  }
+}
