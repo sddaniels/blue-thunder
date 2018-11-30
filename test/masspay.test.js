@@ -11,16 +11,6 @@ describe ('Masspay', function() {
     });
   });
 
-  describe('isKnownSender', function() {
-    it('should return false when name is not in known recievers list', async function() {
-      expect(await mp.isKnownSender('chester.copperpot@test.com')).to.be.false;
-    });
-
-    it('should return true when name is in known receivers list', async function() {
-      expect(await mp.isKnownSender('cordell@test.com')).to.be.true;
-    });
-  });
-
   describe('isEmailAddress', function() {
     it('should return false when at symbol is missing', function() {
       expect(mp.isEmailAddress('test')).to.be.false;

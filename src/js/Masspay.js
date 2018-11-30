@@ -19,9 +19,9 @@ const Masspay = function() {
     });
   }
 
-  function isKnownSender(name) {
+  function isKnownReceiver(email) {
     return new Promise(function(resolve) {
-      return resolve(KNOWN_RECIEVERS.includes(name));
+      return resolve(KNOWN_RECIEVERS.includes(email));
     });
   }
 
@@ -30,7 +30,7 @@ const Masspay = function() {
   }
 
   async function isValidReceiver(receiver) {
-    return !!receiver && await isKnownSender(receiver);
+    return !!receiver && await isKnownReceiver(receiver);
   }
 
   function hasTwoOrLessDecimalPlaces(amount) {
@@ -81,7 +81,6 @@ const Masspay = function() {
 
   return {
     getKnownReceivers: getKnownReceivers,
-    isKnownSender: isKnownSender,
     isEmailAddress: isEmailAddress,
     isValidReceiver: isValidReceiver,
     isValidAmount: isValidAmount,
