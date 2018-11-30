@@ -5,22 +5,21 @@ const mp = Masspay();
 
 describe ('Masspay', function() {
   describe('getKnownReceivers', function() {
-    it('should return the list of known receivers', function() {
-      var receivers = mp.getKnownReceivers();
+    it('should return the list of known receivers', async function() {
+      var receivers = await mp.getKnownReceivers();
       expect(receivers.length).to.equal(10);
     });
   });
 
   describe('isKnownSender', function() {
-    it('should return false when name is not in known recievers list', function() {
-      expect(mp.isKnownSender('chester.copperpot@test.com')).to.be.false;
+    it('should return false when name is not in known recievers list', async function() {
+      expect(await mp.isKnownSender('chester.copperpot@test.com')).to.be.false;
     });
 
-    it('should return true when name is in known receivers list', function() {
-      expect(mp.isKnownSender('cordell@test.com')).to.be.true;
+    it('should return true when name is in known receivers list', async function() {
+      expect(await mp.isKnownSender('cordell@test.com')).to.be.true;
     });
   });
-
 
   describe('isEmailAddress', function() {
     it('should return false when at symbol is missing', function() {
@@ -33,16 +32,16 @@ describe ('Masspay', function() {
   });
 
   describe('isValidReceiver', function() {
-    it('should return false when receiver is null', function() {
-      expect(mp.isValidReceiver()).to.be.false;
+    it('should return false when receiver is null', async function() {
+      expect(await mp.isValidReceiver()).to.be.false;
     });
 
-    it('should return false when not a known receiver', function() {
-      expect(mp.isValidReceiver('test')).to.be.false;
+    it('should return false when not a known receiver', async function() {
+      expect(await mp.isValidReceiver('test')).to.be.false;
     });
 
-    it('should return true when known receiver', function() {
-      expect(mp.isValidReceiver('emerald@test.com')).to.be.true;
+    it('should return true when known receiver', async function() {
+      expect(await mp.isValidReceiver('emerald@test.com')).to.be.true;
     });
   });
 
@@ -69,26 +68,26 @@ describe ('Masspay', function() {
   });
 
   describe('submit', function() {
-    it('should return error when items are null', function() {
-      var result = mp.submit();
+    it('should return error when items are null', async function() {
+      var result = await mp.submit();
       expect(result.success).to.be.false;
       expect(result.error).to.equal('empty');
     });
 
-    it('should return error when items are not an array', function() {
-      var result = mp.submit({});
+    it('should return error when items are not an array', async function() {
+      var result = await mp.submit({});
       expect(result.success).to.be.false;
       expect(result.error).to.equal('empty');
     });
 
-    it('should return error when items are empty', function() {
-      var result = mp.submit([]);
+    it('should return error when items are empty', async function() {
+      var result = await mp.submit([]);
       expect(result.success).to.be.false;
       expect(result.error).to.equal('empty');
     });
 
-    it('should return error when invalid receiver present', function() {
-      var result = mp.submit([
+    it('should return error when invalid receiver present', async function() {
+      var result = await mp.submit([
         { receiver: 'julio@test.com', amount: '1.00' },
         { receiver: 'kendrick@test.com', amount: '1.00' },
         { receiver: 'Hiawatha Stone', amount: '1.00' }
@@ -98,8 +97,8 @@ describe ('Masspay', function() {
       expect(result.item).to.equal(2);
     });
 
-    it('should return success when valid', function() {
-      var result = mp.submit([
+    it('should return success when valid', async function() {
+      var result = await mp.submit([
         { receiver: 'julio@test.com', amount: '1.00' },
         { receiver: 'kendrick@test.com', amount: '1.00' },
         { receiver: 'vikram@test.com', amount: '1.00' }

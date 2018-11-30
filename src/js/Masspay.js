@@ -14,19 +14,23 @@ const Masspay = function() {
   ];
 
   function getKnownReceivers() {
-    return KNOWN_RECIEVERS.slice();
+    return new Promise(function(resolve) {
+      return resolve(KNOWN_RECIEVERS.slice());
+    });
   }
 
   function isKnownSender(name) {
-    return KNOWN_RECIEVERS.includes(name);
+    return new Promise(function(resolve) {
+      return resolve(KNOWN_RECIEVERS.includes(name));
+    });
   }
 
   function isEmailAddress(email) {
     return email.includes('@');
   }
 
-  function isValidReceiver(receiver) {
-    return !!receiver && isKnownSender(receiver);
+  async function isValidReceiver(receiver) {
+    return !!receiver && await isKnownSender(receiver);
   }
 
   function hasTwoOrLessDecimalPlaces(amount) {
@@ -42,16 +46,19 @@ const Masspay = function() {
     return !items || !Array.isArray(items) || items.length < 1;
   }
 
-  function submit(items) {
+  async function submit(items) {
     if (itemsAreEmpty(items)) {
-      return {
-        "success": false,
-        "error": "empty"
-      };
+      return new Promise(function(resolve) {
+        return resolve({
+          "success": false,
+          "error": "empty"
+        });
+      });
     }
 
     for (var i = 0; i < items.length; i++) {
-      if (!isValidReceiver(items[i].receiver)) {
+      const validReceiver = await isValidReceiver(items[i].receiver);
+      if (!validReceiver) {
         return {
           "success": false,
           "error": "invalidReceiver",
