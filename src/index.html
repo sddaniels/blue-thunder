@@ -27,7 +27,7 @@
   <header class="header">
     <div class="container header__container">
       <h1>Create a Masspay</h1>
-      <button class="btn btn--primary-action header__btn">+</button>
+      <button id="js-add" class="btn btn--primary-action header__btn">+</button>
     </div>
   </header>
 
@@ -43,34 +43,28 @@
   </div> -->
 
   <div class="card masspay container">
-    <table>
-      <thead>
-        <tr>
-          <th class="masspay__cell">Recipient</th>
-          <th class="masspay__cell">Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="masspay__cell"><input name="receiver" type="text" /></td>
-          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
-        </tr>
-        <tr>
-          <td class="masspay__cell"><input name="receiver" type="text" /></td>
-          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
-        </tr>
-        <tr>
-          <td class="masspay__cell"><input name="receiver" type="text" /></td>
-          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
-        </tr>
-      </tbody>
-    </table>
+    <form id="js-masspay">
+      <table id="js-table">
+        <thead>
+          <tr>
+            <th class="masspay__cell">Recipient</th>
+            <th class="masspay__cell">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="masspay__cell"><input name="receiver" type="text" /></td>
+            <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
     <div class="masspay__footer">
       <div class="masspay__total">
         $500.00
       </div>
       <div class="masspay__submit">
-        <button class="btn btn--primary">Submit</button>
+        <button id="js-submit" class="btn btn--primary">Submit</button>
       </div>
     <div>
   </div>

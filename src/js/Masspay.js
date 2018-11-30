@@ -29,6 +29,15 @@ const Masspay = function() {
     return !!receiver && isKnownSender(receiver);
   }
 
+  function hasTwoOrLessDecimalPlaces(amount) {
+    const timesHundred = amount * 100;
+    return Math.floor(timesHundred) === timesHundred;
+  }
+
+  function isValidAmount(amount) {
+    return !isNaN(amount) && amount > 0 && hasTwoOrLessDecimalPlaces(amount);
+  }
+
   function itemsAreEmpty(items) {
     return !items || !Array.isArray(items) || items.length < 1;
   }
@@ -49,6 +58,13 @@ const Masspay = function() {
           "item": i
         };
       }
+      if (!isValidAmount(items[i].amount)) {
+        return {
+          "success": false,
+          "error": "invalidAmount",
+          "item": i
+        };
+      }
     }
 
     return {
@@ -61,6 +77,7 @@ const Masspay = function() {
     isKnownSender: isKnownSender,
     isEmailAddress: isEmailAddress,
     isValidReceiver: isValidReceiver,
+    isValidAmount: isValidAmount,
     submit: submit
   };
 }

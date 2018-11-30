@@ -46,6 +46,28 @@ describe ('Masspay', function() {
     });
   });
 
+  describe('isValidAmount', function() {
+      it('should return false when not a number', function() {
+        expect(mp.isValidAmount('borked')).to.be.false;
+      });
+
+      it('should return false when zero', function() {
+        expect(mp.isValidAmount(0)).to.be.false;
+      });
+
+      it('should return false when negative', function() {
+        expect(mp.isValidAmount(-1)).to.be.false;
+      });
+
+      it('should return false when too many decimal places', function() {
+        expect(mp.isValidAmount(5.343)).to.be.false;
+      });
+
+      it('should return true when a valid amount', function() {
+        expect(mp.isValidAmount(5.42)).to.be.true;
+      });
+  });
+
   describe('submit', function() {
     it('should return error when items are null', function() {
       var result = mp.submit();
