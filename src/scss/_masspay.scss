@@ -1,0 +1,61 @@
+.masspay {
+  > table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  th {
+    color: $color-dark-gray;
+    font-weight: 300;
+  }
+
+  td {
+    border-top: 1px solid $color-gray;
+    border-bottom: 1px solid $color-gray;
+  }
+
+  &__amt-cell {
+    text-align: right;
+
+    > input {
+      text-align: right;
+    }
+  }
+
+  &__cell {
+    padding: 15px 10px;
+    text-align: left;
+
+    > input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: none;
+      background-color: $color-light-gray;
+      border-radius: 5px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &:first-child {
+      > input {
+        width: calc(100% - 10px);
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    text-align: right;
+  }
+
+  &__total {
+    flex-grow: 1;
+    padding-right: 15px;
+    font-size: 1.5rem;
+  }
+}

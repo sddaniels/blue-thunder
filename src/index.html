@@ -8,11 +8,72 @@
   <title>Masspay - Tech Problem</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Sacramento" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300|Roboto:300,400" rel="stylesheet">
   <link rel="stylesheet" href="css/main.min.css">
 </head>
 
 <body>
+  <nav class="nav">
+    <div class=nav__brand>
+      <img class="nav__logo" src="https://cdn.dwolla.com/images/cms/logos/dwolla/dwolla-logo-white-all.svg" alt="Dwolla"/>
+      <span class=nav__title>Masspay</span>
+    </div>
+    <div class="nav__actions">
+      <span class="nav__name">Chester Copperpot</span>
+      <a class="btn btn--outline nav__button" href="#">Log out</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <div class="container header__container">
+      <h1>Create a Masspay</h1>
+      <button class="btn btn--primary-action header__btn">+</button>
+    </div>
+  </header>
+
+  <!-- <div class="card success container">
+    <h2>Your Masspay is in progress!</h2>
+    <dl>
+      <dt>Total</dt>
+      <dd>$500.00</dd>
+    </dl>
+    <p>
+      <button class="btn btn--primary">Create another Masspay</button>
+    </p>
+  </div> -->
+
+  <div class="card masspay container">
+    <table>
+      <thead>
+        <tr>
+          <th class="masspay__cell">Recipient</th>
+          <th class="masspay__cell">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="masspay__cell"><input name="receiver" type="text" /></td>
+          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
+        </tr>
+        <tr>
+          <td class="masspay__cell"><input name="receiver" type="text" /></td>
+          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
+        </tr>
+        <tr>
+          <td class="masspay__cell"><input name="receiver" type="text" /></td>
+          <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="masspay__footer">
+      <div class="masspay__total">
+        $500.00
+      </div>
+      <div class="masspay__submit">
+        <button class="btn btn--primary">Submit</button>
+      </div>
+    <div>
+  </div>
 
   <script src="js/bundle.js"></script>
 </body>

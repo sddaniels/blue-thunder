@@ -1,0 +1,17 @@
+body {
+  background-color: $color-light-gray;
+}
+
+.container {
+  width: calc(100% - 30px);
+  margin: 0 15px;
+
+  @media (min-width: $size-sm) {
+    width: $size-sm;
+    margin: 0 auto;
+  }
+
+  @media (min-width: $size-md) {
+    width: $size-md;
+  }
+}

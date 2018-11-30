@@ -1,0 +1,53 @@
+.nav {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 15px;
+  background: $gradient-brand;
+  color: $color-white;
+
+  @media (min-width: $size-sm) {
+    padding: 0 20px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.1875rem;
+  }
+
+  &__logo {
+    height: 34px;
+    padding-right: 14px;
+    margin-right: 14px;
+    border-right: 1px solid $color-white;
+
+    @media (max-width: $size-sm) {
+      border: none;
+    }
+  }
+
+  &__title {
+    font-weight: 300;
+    font-style: italic;
+
+    @media (max-width: $size-sm) {
+      display: none;
+    }
+  }
+
+  &__actions {
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  &__name {
+    @media (max-width: $size-md) {
+      display: none;
+    }
+  }
+
+  &__button {
+    margin-left: 20px;
+  }
+}

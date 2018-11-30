@@ -1,0 +1,15 @@
+.header {
+  padding: 25px 0 6px;
+  background-color: $color-white;
+  box-shadow: $shadow-card;
+
+  &__container {
+    position: relative;
+  }
+
+  &__btn {
+    position: absolute;
+    bottom: -52px;
+    right: 0;
+  }
+}

@@ -3,14 +3,15 @@
   "description": "Used to compile static assets",
   "scripts": {
     "test": "mocha || true",
-    "watch": "onchange 'src/scss/**/*.scss' -i -- npm run css",
+    "watch": "onchange 'src/scss/**/*.scss' -i -- npm-run-all css html",
     "css": "npm-run-all css:*",
     "css:lint": "stylelint src/scss/*.scss; exit 0",
     "css:sass": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 src/scss/main.scss dist/css/main.css",
     "css:prefix": "postcss --use autoprefixer --replace dist/css/*.css",
     "css:minify": "cleancss --level 1 --source-map --source-map-inline-sources --output dist/css/main.min.css dist/css/main.css",
     "js": "webpack",
-    "build": "npm-run-all css js && cp -v src/index.html dist/index.html"
+    "html": "cp -v src/index.html dist/index.html",
+    "build": "npm-run-all css js html"
   },
   "devDependencies": {
     "autoprefixer": "9.0.1",

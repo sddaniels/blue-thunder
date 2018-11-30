@@ -1,0 +1,28 @@
+.btn {
+  color: $color-white;
+
+  &--outline {
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid $color-white;
+    border-radius: 5px;
+  }
+
+  &--primary {
+    padding: 15px 25px;
+    background-color: $color-purple;
+    text-decoration: none;
+    border: 1px solid $color-white;
+    border-radius: 5px;
+  }
+
+  &--primary-action {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    background-color: $color-purple;
+    border-radius: 25px;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+}
