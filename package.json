@@ -17,6 +17,7 @@
     "autoprefixer": "9.0.1",
     "chai": "4.2.0",
     "clean-css-cli": "4.1.11",
+    "jsdom": "^13.0.0",
     "lodash": "4.17.11",
     "mocha": "5.2.0",
     "node-sass": "4.9.2",

@@ -31,19 +31,19 @@
     </div>
   </header>
 
-  <!-- <div class="card success container">
+  <div id="js-success" class="card success container">
     <h2>Your Masspay is in progress!</h2>
     <dl>
       <dt>Total</dt>
-      <dd>$500.00</dd>
+      <dd class="js-total">$500.00</dd>
     </dl>
     <p>
-      <button class="btn btn--primary">Create another Masspay</button>
+      <button id="js-create" class="btn btn--primary">Create another Masspay</button>
     </p>
-  </div> -->
+  </div>
 
-  <div class="card masspay container">
-    <form id="js-masspay">
+  <div id="js-masspay" class="card masspay container">
+    <form id="js-masspay-form">
       <table id="js-table">
         <thead>
           <tr>
@@ -60,8 +60,8 @@
       </table>
     </form>
     <div class="masspay__footer">
-      <div class="masspay__total">
-        $500.00
+      <div class="js-total masspay__total">
+        $0.00
       </div>
       <div class="masspay__submit">
         <button id="js-submit" class="btn btn--primary">Submit</button>
