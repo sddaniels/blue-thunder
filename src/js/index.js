@@ -31,10 +31,7 @@ import MoneyUtils from './MoneyUtils';
     });
   });
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.matches('#js-add')) return;
-    event.preventDefault();
-
+  function addRow() {
     var table = document.getElementById('js-table');
 
     var newRow = table.insertRow(table.rows.length);
@@ -53,6 +50,13 @@ import MoneyUtils from './MoneyUtils';
     amountInput.setAttribute('type', 'text');
     amountInput.setAttribute('name', 'amount');
     amount.appendChild(amountInput);
+  }
+
+  document.addEventListener('click', function(event) {
+    if (!event.target.matches('#js-add')) return;
+    event.preventDefault();
+
+    addRow();
   });
 
   document.addEventListener('click', function(event) {
@@ -123,5 +127,11 @@ import MoneyUtils from './MoneyUtils';
     receiverDebounceTimer = setTimeout(function() {
         validateReceiver(event);
     }, 750);
+  });
+
+  document.addEventListener('keyup', function(event) {
+    if (!event.target.matches('input') && event.which === 65) {
+      addRow();
+    }
   });
 })();
