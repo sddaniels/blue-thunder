@@ -43,6 +43,11 @@
   </div>
 
   <div id="js-masspay" class="card masspay container">
+    <div id="js-error-summary" class="error">
+      <p>
+        <strong>There was a problem submitting your masspay.</strong>
+      </p>
+    </div>
     <form id="js-masspay-form">
       <table id="js-table">
         <thead>
@@ -53,8 +58,12 @@
         </thead>
         <tbody>
           <tr>
-            <td class="masspay__cell"><input name="receiver" type="text" /></td>
-            <td class="masspay__cell masspay__amt-cell"><input name="amount" type="text" /></td>
+            <td class="masspay__cell">
+              <input name="receiver" type="text" />
+            </td>
+            <td class="masspay__cell masspay__amt-cell">
+              <input name="amount" type="text" />
+            </td>
           </tr>
         </tbody>
       </table>

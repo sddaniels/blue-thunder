@@ -4,6 +4,7 @@ import MoneyUtils from './MoneyUtils';
 
 (function () {
   var mp = Masspay();
+  var receiverDebounceTimer;
 
   document.addEventListener('click', function(event) {
     if (!event.target.matches('#js-submit')) return;
@@ -15,12 +16,16 @@ import MoneyUtils from './MoneyUtils';
     var data = util.convertFormData(util.serializeForm(form));
 
     mp.submit(data).then(function(result) {
+      var error = document.getElementById('js-error-summary');
+
       if (result.success) {
         var success = document.getElementById('js-success');
         var masspay = document.getElementById('js-masspay');
         success.style.display = 'block';
+        error.style.display = 'none';
         masspay.style.display = 'none';
       } else {
+        error.style.display = 'block';
         console.log(result);
       }
     });
@@ -71,6 +76,18 @@ import MoneyUtils from './MoneyUtils';
   document.addEventListener('keyup', function(event) {
     if (!event.target.matches('input[name="amount"]')) return;
 
+    var existingError = event.target.parentNode.querySelector('.validation-error');
+    if (existingError) {
+      event.target.parentNode.removeChild(existingError);
+    }
+
+    if (!!event.target.value && !mp.isValidAmount(event.target.value)) {
+      var validationError = document.createElement('span');
+      validationError.classList.add('validation-error');
+      validationError.appendChild(document.createTextNode('Invalid amount.'));
+      event.target.parentNode.appendChild(validationError);
+    }
+
     var util = MoneyUtils();
     var amounts = document.querySelectorAll('input[name="amount"]');
 
@@ -79,5 +96,32 @@ import MoneyUtils from './MoneyUtils';
     for (var i = 0; i < totalElements.length; i++) {
       totalElements[i].innerHTML = util.totalAmounts(amounts);
     }
+  });
+
+  function validateReceiver(event) {
+    var existingError = event.target.parentNode.querySelector('.validation-error');
+    if (existingError) {
+      event.target.parentNode.removeChild(existingError);
+    }
+
+    if (!event.target.value) return;
+
+    mp.isValidReceiver(event.target.value).then(function(result) {
+      if (!result) {
+        var validationError = document.createElement('span');
+        validationError.classList.add('validation-error');
+        validationError.appendChild(document.createTextNode('Cannot send to this receiver, unknown email address.'));
+        event.target.parentNode.appendChild(validationError);
+      }
+    });
+  }
+
+  document.addEventListener('keyup', function(event) {
+    if (!event.target.matches('input[name="receiver"]')) return;
+
+    clearTimeout(receiverDebounceTimer);
+    receiverDebounceTimer = setTimeout(function() {
+        validateReceiver(event);
+    }, 750);
   });
 })();

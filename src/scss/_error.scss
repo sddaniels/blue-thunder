@@ -1,0 +1,19 @@
+.error {
+  display: none;
+  padding: 15px;
+
+  > p {
+    margin: 0;
+    padding: 15px;
+    color: $color-red;
+    background-color: lighten($color-red, 45%);
+    border: 1px solid $color-red;
+    border-radius: 5px;
+  }
+}
+
+.validation-error {
+  display: block;
+  padding-top: 10px;
+  color: $color-red;
+}
