@@ -1,13 +1,25 @@
 import Masspay from './Masspay';
 import FormUtils from './FormUtils';
 import MoneyUtils from './MoneyUtils';
+import Events from './Events';
+import Display from './Display';
 
 (function () {
+  const KEY_A = 65;
   const INVALID_RECEIVER = 'Cannot send to this receiver, unknown email address.';
   const INVALID_AMOUNT = 'Invalid amount.';
 
   var mp = Masspay();
+  var events = Events();
+  var display = Display();
   var receiverDebounceTimer;
+
+  function createInput(name) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('name', name);
+    return input;
+  }
 
   function addRow() {
     var table = document.getElementById('js-table');
@@ -17,17 +29,11 @@ import MoneyUtils from './MoneyUtils';
     var amount = newRow.insertCell(1);
 
     receiver.classList.add('masspay__cell');
-    var receiverInput = document.createElement('input');
-    receiverInput.setAttribute('type', 'text');
-    receiverInput.setAttribute('name', 'receiver');
-    receiver.appendChild(receiverInput);
+    receiver.appendChild(createInput('receiver'));
 
     amount.classList.add('masspay__cell');
     amount.classList.add('masspay__amt-cell');
-    var amountInput = document.createElement('input');
-    amountInput.setAttribute('type', 'text');
-    amountInput.setAttribute('name', 'amount');
-    amount.appendChild(amountInput);
+    amount.appendChild(createInput('amount'));
   }
 
   function displayError(text) {
@@ -65,7 +71,7 @@ import MoneyUtils from './MoneyUtils';
     });
   }
 
-  function handleSubmitError(result, cellIndex, text) {
+  function displayCellError(result, cellIndex, text) {
     var table = document.getElementById('js-table');
     var cell = table.rows[result.item + 1].cells[cellIndex];
     hideValidationError(cell);
@@ -73,9 +79,26 @@ import MoneyUtils from './MoneyUtils';
     displayError();
   }
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.matches('#js-submit')) return;
+  function handleSubmitError(result) {
+    switch (result.error) {
+      case 'empty':
+        displayError('Please enter at least one item.');
+        break;
 
+      case 'invalidReceiver':
+        displayCellError(result, 0, INVALID_RECEIVER);
+        break;
+
+      case 'invalidAmount':
+        displayCellError(result, 1, INVALID_AMOUNT);
+        break;
+
+      default:
+        displayError('There was a problem submitting your masspay.');
+    }
+  }
+
+  events.handleClick('#js-submit', function(event) {
     event.preventDefault();
 
     var util = FormUtils();
@@ -86,43 +109,23 @@ import MoneyUtils from './MoneyUtils';
       var error = document.getElementById('js-error-summary');
 
       if (result.success) {
-        var success = document.getElementById('js-success');
-        var masspay = document.getElementById('js-masspay');
-        success.style.display = 'block';
-        error.style.display = 'none';
-        masspay.style.display = 'none';
+        display.show('js-success');
+        display.hide('js-header');
+        display.hide('js-masspay');
+        display.hide(error);
       } else {
-        error.style.display = 'block';
-
-        switch (result.error) {
-          case 'empty':
-            displayError('Please enter at least one item.');
-            break;
-
-          case 'invalidReceiver':
-            handleSubmitError(result, 0, INVALID_RECEIVER);
-            break;
-
-          case 'invalidAmount':
-            handleSubmitError(result, 1, INVALID_AMOUNT);
-            break;
-
-          default:
-            displayError('There was a problem submitting your masspay.');
-        }
+        display.show(error);
+        handleSubmitError(result);
       }
     });
   });
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.matches('#js-add')) return;
+  events.handleClick('#js-add', function(event) {
     event.preventDefault();
-
     addRow();
   });
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.matches('#js-create')) return;
+  events.handleClick('#js-create-another', function(event) {
     event.preventDefault();
 
     var table = document.getElementById('js-table');
@@ -132,16 +135,12 @@ import MoneyUtils from './MoneyUtils';
     }
 
     document.getElementById('js-masspay-form').reset();
-
-    var success = document.getElementById('js-success');
-    var masspay = document.getElementById('js-masspay');
-    success.style.display = 'none';
-    masspay.style.display = 'block';
+    display.hide('js-success');
+    display.show('js-header');
+    display.show('js-masspay');
   });
 
-  document.addEventListener('keyup', function(event) {
-    if (!event.target.matches('input[name="amount"]')) return;
-
+  events.handleKeyup('input[name="amount"]', function(event) {
     hideValidationError(event.target.parentNode);
 
     if (!!event.target.value && !mp.isValidAmount(event.target.value)) {
@@ -158,17 +157,15 @@ import MoneyUtils from './MoneyUtils';
     }
   });
 
-  document.addEventListener('keyup', function(event) {
-    if (!event.target.matches('input[name="receiver"]')) return;
-
+  events.handleKeyup('input[name="receiver"]', function(event) {
     clearTimeout(receiverDebounceTimer);
     receiverDebounceTimer = setTimeout(function() {
         validateReceiver(event);
     }, 750);
   });
 
-  document.addEventListener('keyup', function(event) {
-    if (!event.target.matches('input') && event.which === 65) {
+  events.handleKeyup(':not(input)', function(event) {
+    if (event.which === KEY_A) {
       addRow();
     }
   });

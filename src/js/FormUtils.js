@@ -39,7 +39,7 @@ const FormUtils = function() {
   return {
     serializeForm: serializeForm,
     convertFormData: convertFormData
-  }
+  };
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
